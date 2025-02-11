@@ -2,6 +2,8 @@ import streamlit as st
 from transformers import pipeline
 import plotly.express as px
 import pandas as pd
+from concurrent.futures import ThreadPoolExecutor
+import threading
 
 st.set_page_config(
     page_title="Анализ Тональности Текста",
@@ -28,22 +30,10 @@ st.markdown("""
     </style>
     """, unsafe_allow_html=True)
 
-import streamlit as st
-from transformers import pipeline
-import plotly.express as px
-import pandas as pd
-from concurrent.futures import ThreadPoolExecutor
-import threading
+
 
 # Настройка блокировки для потокобезопасности
 model_lock = threading.Lock()
-
-st.set_page_config(
-    page_title="Анализ Тональности Текста",
-    page_icon=":last_quarter_moon:",
-    layout="wide",
-    initial_sidebar_state="expanded"
-)
 
 st.title("Анализ Тональности Текста")
 st.write(
