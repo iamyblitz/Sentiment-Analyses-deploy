@@ -41,7 +41,7 @@ st.write(
 def load_sentiment_model():
     return pipeline(
         "sentiment-analysis",
-        model="distilbert-base-uncased-finetuned-sst-2-english"
+        model="nlptown/bert-base-multilingual-uncased-sentiment"
     )
 
 
