@@ -14,9 +14,6 @@ st.set_page_config(
 
 st.markdown("""
     <style>
-        .stApp {
-            background-color: #CDC7BC;
-        }
         h1, h2, h3 {
             color: #2c3e50;
         }
@@ -44,8 +41,7 @@ st.write(
 def load_sentiment_model():
     return pipeline(
         "sentiment-analysis",
-        model="distilbert-base-uncased-finetuned-sst-2-english",
-        device_map="auto"
+        model="distilbert-base-uncased-finetuned-sst-2-english"
     )
 
 
