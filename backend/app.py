@@ -34,10 +34,12 @@ class SentimentResponse(BaseModel):
 
 @app.post("/analyze_sentiment/", response_model=SentimentResponse)
 async def analyze_sentiment(request: Request, text_request: TextRequest):
+    data_preprocessor = DataPreprocessor(text_column="MessageText")
+    cleaned_text = data_preprocessor.preprocess_text(text_request.text)
     try:
         with model_lock:  # Блокировка для потокобезопасности модели
             model = load_sentiment_model() # Получаем загруженную модель
-            result = model(text_request.text)[0]
+            result = model(cleaned_text)[0]
             return {"label": result["label"], "score": result["score"]}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
