@@ -13,7 +13,7 @@ def data_preprocessing_ui(backend_url):
             files = {"file": uploaded_file}
             with st.spinner("Очищаем данные..."):
                 try:
-                    response = requests.post(f"{backend_url}/preprocess/preprocess_csv/", files=files)
+                    response = requests.post(f"{backend_url}/preprocess_csv/", files=files)
                     response.raise_for_status()
                     cleaned_csv_data = response.content
                     st.success("CSV файл успешно очищен!")

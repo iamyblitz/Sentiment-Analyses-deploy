@@ -7,7 +7,7 @@ def sentiment_analysis_ui(backend_url):
     st.sidebar.header("Настройки анализа тональности")
     input_text = st.sidebar.text_area(
         "Введите текст для анализа:",
-        "Мне очень нравится тут!"
+        "Отличная погода!"
     )
 
     analyze_button = st.sidebar.button("Анализировать текст")
@@ -17,7 +17,7 @@ def sentiment_analysis_ui(backend_url):
     demo_button = st.sidebar.button("Анализировать демо-тексты")
 
     def analyze_text_from_backend(text):
-        api_url = f"{backend_url}/sentiment/analyze_sentiment/" # Уточненный URL
+        api_url = f"{backend_url}/analyze_sentiment/" # Уточненный URL
         try:
             response = requests.post(api_url, json={"text": text})
             response.raise_for_status()
@@ -33,7 +33,12 @@ def sentiment_analysis_ui(backend_url):
             with st.spinner("Анализируем текст..."):
                 result = analyze_text_from_backend(input_text)
                 if result:
-                    sentiment = result["label"]
+                    mapping = {
+                        "LABEL_0": "Neutral",
+                        "LABEL_1": "Positive",
+                        "LABEL_2": "Negative"
+                    }
+                    sentiment = mapping.get(result["label"], result["label"])
                     score = result["score"]
 
                     st.markdown("### Результат анализа")
@@ -64,6 +69,13 @@ def sentiment_analysis_ui(backend_url):
 
         if demo_results:
             df_demo = pd.DataFrame(demo_results)
+
+            mapping = {
+                "LABEL_0": "Neutral",
+                "LABEL_1": "Positive",
+                "LABEL_2": "Negative"
+            }
+            df_demo["label"] = df_demo["label"].map(mapping).fillna(df_demo["label"])
 
             st.markdown("### Анализ демо-текстов")
             st.dataframe(df_demo)

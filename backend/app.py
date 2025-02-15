@@ -19,7 +19,7 @@ def load_sentiment_model():
     if sentiment_pipeline is None:
         sentiment_pipeline = pipeline(
             "sentiment-analysis",
-            model="nlptown/bert-base-multilingual-uncased-sentiment"
+            model="ozm-gg/ML_Pandas_AI_LearningLab_2025"
         )
     return sentiment_pipeline
 
@@ -44,9 +44,6 @@ async def analyze_sentiment(request: Request, text_request: TextRequest):
 
 @app.post("/preprocess_csv/")
 async def preprocess_csv(file: UploadFile = File(...)):
-    if file.content_type != "text/csv":
-        raise HTTPException(status_code=400, detail="Please upload a CSV file")
-
     try:
         contents = await file.read()
         df = pd.read_csv(io.StringIO(contents.decode('utf-8'))) # Читаем CSV из UploadFile
