@@ -1,0 +1,6 @@
+streamlit
+requests
+plotly-express
+pandas
+wordcloud
+altair
