@@ -1,5 +1,5 @@
-import streamlit as st
 import os
+import streamlit as st
 import base64
 # Импортируем домашнюю страницу
 from homepage import show_homepage
