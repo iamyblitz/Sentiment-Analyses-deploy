@@ -3,14 +3,27 @@ import streamlit as st
 
 def load_video(video_path):
     """
-    Загружает видеофайл по указанному пути и возвращает его содержимое в байтах.
-    При ошибке выводит сообщение.
+    Загружает видеофайл в бинарном режиме.
+    При возникновении ошибки выводит сообщение и возвращает None.
     """
     try:
         with open(video_path, "rb") as file:
             return file.read()
     except Exception as e:
         st.error(f"Не удалось загрузить видео '{video_path}': {e}")
+        return None
+
+
+def load_image(image_path):
+    """
+    Загружает изображение в бинарном режиме.
+    При возникновении ошибки выводит сообщение и возвращает None.
+    """
+    try:
+        with open(image_path, "rb") as file:
+            return file.read()
+    except Exception as e:
+        st.error(f"Не удалось загрузить изображение '{image_path}': {e}")
         return None
 
 
@@ -51,165 +64,30 @@ def show_homepage():
         """, unsafe_allow_html=True)
 
         if st.button("🚀 Начать анализ прямо сейчас!", use_container_width=True):
-            # Обновляем query-параметры для перехода на другую страницу
             st.experimental_set_query_params(page="app")
 
     st.markdown("\n---")
 
-    # Блок возможностей с иконками
-    st.markdown("""
-    <div style='margin: 40px 0;'>
-        <h2 style='text-align: center; color: white; margin-bottom: 30px;'>
-            🔍 Что умеет наш анализатор
-        </h2>
-    </div>
-    """, unsafe_allow_html=True)
-
-    st.markdown("""
-    <style>
-        .feature-card {
-            padding: 1.5rem;
-            border-radius: 15px;
-            background-color: var(--secondary-background-color);
-            border: 1px solid var(--border-color);
-            transition: all 0.3s ease;
-            min-height: 200px;
-            margin: 10px;
-        }
-        .feature-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-        }
-        .feature-icon {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-            color: var(--primary-color);
-        }
-        .feature-title {
-            color: var(--primary-text-color);
-            margin-bottom: 0.8rem;
-            font-weight: 600;
-            font-size: 1.2rem;
-        }
-        .feature-description {
-            color: var(--primary-text-color);
-            font-size: 1rem;
-            line-height: 1.4;
-            opacity: 0.9;
-        }
-    </style>
-    """, unsafe_allow_html=True)
-
-    # Первый ряд возможностей
-    col1, col2, col3 = st.columns(3)
-    with col1:
+    # Пример использования изображения в блоке "Кастомизация модели"
+    with st.expander("🤖 Кастомизация модели", expanded=False):
         st.markdown("""
-        <div class="feature-card">
-            <div class="feature-icon">📊</div>
-            <h3 class="feature-title">Анализ текста</h3>
-            <p class="feature-description">
-                Классификация вашего текста по трем классам 
-                POSITIVE/NEUTRAL/NEGATIVE с точностью от 90%
-            </p>
-        </div>
-        """, unsafe_allow_html=True)
-    with col2:
-        st.markdown("""
-        <div class="feature-card">
-            <div class="feature-icon">🧹</div>
-            <h3 class="feature-title">Подготовка данных</h3>
-            <p class="feature-description">
-                Автоматическая обработка CSV: очистка от стоп-слов, лемматизация, 
-                удаление имен, чисел и спецсимволов
-            </p>
-        </div>
-        """, unsafe_allow_html=True)
-    with col3:
-        st.markdown("""
-        <div class="feature-card">
-            <div class="feature-icon">🔍</div>
-            <h3 class="feature-title">Анализ CSV данных</h3>
-            <p class="feature-description">
-                Разметьте весь ваш набор данных с визуализацией 
-                результатов в виде графиков и облаков слов
-            </p>
-        </div>
-        """, unsafe_allow_html=True)
+        **Шаги:**
+        1. Загрузите CSV-файл
+        2. Нажмите "Обучить модель"
+        3. Ознакомьтесь с результатами
+        """)
+        # Загружаем изображение через функцию load_image
+        img_bytes = load_image("static/Training05.png")
+        if img_bytes:
+            st.image(img_bytes, width=1000)
 
-    # Второй ряд возможностей
-    col4, col5 = st.columns(2)
-    with col4:
-        st.markdown("""
-        <div class="feature-card">
-            <div class="feature-icon">🤖</div>
-            <h3 class="feature-title">Кастомизация модели</h3>
-            <p class="feature-description">
-                Персональное дообучение нейросети 
-                на ваших данных за 5 кликов
-            </p>
-        </div>
-        """, unsafe_allow_html=True)
-    with col5:
-        st.markdown("""
-        <div class="feature-card">
-            <div class="feature-icon">💬</div>
-            <h3 class="feature-title">Анализ чатов</h3>
-            <p class="feature-description">
-                Визуализация эмоциональной динамики 
-                в Telegram-диалогах
-            </p>
-        </div>
-        """, unsafe_allow_html=True)
-
-    st.markdown("\n---")
-
-    st.markdown("""
-    <div style='margin: 40px 0;'>
-        <h2 style='text-align: center; color: white; margin-bottom: 30px;'>
-            🛠️ Как работать с платформой
-        </h2>
-    </div>
-    """, unsafe_allow_html=True)
-
-    custom_expander_style = """
-    <style>
-        .stExpander {
-            border: 2px solid #e0e0e0 !important;
-            border-radius: 15px !important;
-            margin: 15px 0 !important;
-            background: var(--secondary-background-color) !important;
-        }
-        .stExpander summary {
-            padding: 1.2rem !important;
-            font-size: 1.1rem !important;
-            font-weight: 600 !important;
-        }
-        .stExpander summary:hover {
-            background-color: rgba(76,175,80,0.1) !important;
-        }
-        .stExpander summary:after {
-            color: var(--primary-color) !important;
-        }
-    </style>
-    """
-    st.markdown(custom_expander_style, unsafe_allow_html=True)
-
-    st.markdown("""
-    <style>
-        video {
-            max-width: 1000px;
-            border-radius: 10px;
-        }                
-    </style>
-    """, unsafe_allow_html=True)
-
-    # Блок с видео-инструкциями
+    # Пример использования видео в других блоках
     with st.expander("📊 Анализ текста", expanded=False):
         st.markdown("""
         **Шаги:**
         1. Введите текст в поле ввода
         2. Нажмите "Анализировать"
-        3. Ознакомьтесь с результатами в правой части экрана
+        3. Ознакомьтесь с результатами
         """)
         video_bytes = load_video("static/analisys_text.mp4")
         if video_bytes:
@@ -239,15 +117,6 @@ def show_homepage():
         if video_bytes:
             st.video(video_bytes, format="video/mp4", muted=True)
 
-    with st.expander("🤖 Кастомизация модели", expanded=False):
-        st.markdown("""
-        **Шаги:**
-        1. Загрузите CSV-файл
-        2. Нажмите "Обучить модель"
-        3. Ознакомьтесь с результатами
-        """)
-        st.image("static/Training05.png", width=1000)
-
     with st.expander("💬 Анализ чатов", expanded=False):
         st.markdown("""
         **Шаги:**
@@ -265,6 +134,6 @@ def show_homepage():
             st.video(video_bytes, format="video/mp4", muted=True)
 
 
-# Для тестирования локально:
+# Для локального тестирования:
 if __name__ == "__main__":
     show_homepage()
