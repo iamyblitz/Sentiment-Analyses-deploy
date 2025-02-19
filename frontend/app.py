@@ -11,7 +11,7 @@ def show_functional_page():
     st.write(
         "Добро пожаловать, выберите один из предложенных режимов и начните свою работу")
 
-    with open("SentimentPanda.png", "rb") as image_file:
+    with open("frontend/SentimentPanda.png", "rb") as image_file:
         encoded_string = base64.b64encode(image_file.read()).decode()
 
     with st.sidebar:
