@@ -1,28 +1,38 @@
 import streamlit as st
 
-def show_homepage():
-    import streamlit as st
 
+def load_video(video_path):
+    """
+    Загружает видеофайл по указанному пути и возвращает его содержимое в байтах.
+    При ошибке выводит сообщение.
+    """
+    try:
+        with open(video_path, "rb") as file:
+            return file.read()
+    except Exception as e:
+        st.error(f"Не удалось загрузить видео '{video_path}': {e}")
+        return None
+
+
+def show_homepage():
     st.markdown("""
     <h1 style='text-align: center; margin-bottom: 5px;'>
         🐼 SentimentPanda: Твой детектив эмоций в текстах
     </h1>
     """, unsafe_allow_html=True)
-    
-    st.markdown(
-        """
+
+    st.markdown("""
         <h4 style='text-align: center;'>
         Универсальная платформа для обработки и анализа текстовых данных 
-         </h4> 
-        """, unsafe_allow_html=True
-    )
+        </h4> 
+    """, unsafe_allow_html=True)
     st.markdown('\n\n')
 
-    col1, col2, col3 = st.columns([1,1,1])
+    col1, col2, col3 = st.columns([1, 1, 1])
     with col2:
         st.markdown("""
         <style>
-            .stButton>button {
+            .stButton > button {
                 background: linear-gradient(45deg, #4CAF50, #8BC34A);
                 color: white;
                 border: none;
@@ -33,7 +43,7 @@ def show_homepage():
                 transition: all 0.3s;
                 box-shadow: 0 4px 15px rgba(76,175,80,0.4);
             }
-            .stButton>button:hover {
+            .stButton > button:hover {
                 transform: scale(1.05);
                 box-shadow: 0 6px 20px rgba(76,175,80,0.6);
             }
@@ -41,15 +51,20 @@ def show_homepage():
         """, unsafe_allow_html=True)
 
         if st.button("🚀 Начать анализ прямо сейчас!", use_container_width=True):
-            st.query_params.from_dict({"page": "app"})
+            # Обновляем query-параметры для перехода на другую страницу
+            st.experimental_set_query_params(page="app")
 
     st.markdown("\n---")
 
     # Блок возможностей с иконками
     st.markdown("""
     <div style='margin: 40px 0;'>
-        <h2 style='text-align: center; color: white; margin-bottom: 30px;'>🔍 Что умеет наш анализатор</h2>""", unsafe_allow_html=True)
-    
+        <h2 style='text-align: center; color: white; margin-bottom: 30px;'>
+            🔍 Что умеет наш анализатор
+        </h2>
+    </div>
+    """, unsafe_allow_html=True)
+
     st.markdown("""
     <style>
         .feature-card {
@@ -64,7 +79,6 @@ def show_homepage():
         .feature-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-            background-color: var(--secondary-background-color);
         }
         .feature-icon {
             font-size: 2rem;
@@ -86,7 +100,7 @@ def show_homepage():
     </style>
     """, unsafe_allow_html=True)
 
-    # Первый ряд
+    # Первый ряд возможностей
     col1, col2, col3 = st.columns(3)
     with col1:
         st.markdown("""
@@ -99,19 +113,17 @@ def show_homepage():
             </p>
         </div>
         """, unsafe_allow_html=True)
-
     with col2:
         st.markdown("""
         <div class="feature-card">
             <div class="feature-icon">🧹</div>
             <h3 class="feature-title">Подготовка данных</h3>
             <p class="feature-description">
-                Автоматическая обработка CSV: очистка от стоп-слов, леммантизация, 
+                Автоматическая обработка CSV: очистка от стоп-слов, лемматизация, 
                 удаление имен, чисел и спецсимволов
             </p>
         </div>
         """, unsafe_allow_html=True)
-
     with col3:
         st.markdown("""
         <div class="feature-card">
@@ -124,7 +136,7 @@ def show_homepage():
         </div>
         """, unsafe_allow_html=True)
 
-    # Второй ряд
+    # Второй ряд возможностей
     col4, col5 = st.columns(2)
     with col4:
         st.markdown("""
@@ -137,7 +149,6 @@ def show_homepage():
             </p>
         </div>
         """, unsafe_allow_html=True)
-
     with col5:
         st.markdown("""
         <div class="feature-card">
@@ -154,8 +165,11 @@ def show_homepage():
 
     st.markdown("""
     <div style='margin: 40px 0;'>
-        <h2 style='text-align: center; color: white; margin-bottom: 30px;'>🛠️ Как работать с платформой</h2>""", unsafe_allow_html=True)
-    
+        <h2 style='text-align: center; color: white; margin-bottom: 30px;'>
+            🛠️ Как работать с платформой
+        </h2>
+    </div>
+    """, unsafe_allow_html=True)
 
     custom_expander_style = """
     <style>
@@ -188,15 +202,18 @@ def show_homepage():
         }                
     </style>
     """, unsafe_allow_html=True)
-    
+
+    # Блок с видео-инструкциями
     with st.expander("📊 Анализ текста", expanded=False):
         st.markdown("""
         **Шаги:**
         1. Введите текст в поле ввода
         2. Нажмите "Анализировать"
-        3. Ознакомтесь с результатами в правой части экрана
+        3. Ознакомьтесь с результатами в правой части экрана
         """)
-        st.video("static/analisys_text.mp4", muted=True)
+        video_bytes = load_video("static/analisys_text.mp4")
+        if video_bytes:
+            st.video(video_bytes, format="video/mp4", muted=True)
 
     with st.expander("🧹 Подготовка данных", expanded=False):
         st.markdown("""
@@ -204,9 +221,11 @@ def show_homepage():
         1. Загрузите CSV-файл
         2. Выберите столбец с текстовыми данными
         3. Нажмите "Очистить CSV"
-        4. Ознакомтесь с результатами и скачайте итоговый файл
+        4. Ознакомьтесь с результатами и скачайте итоговый файл
         """)
-        st.video("static/clean_csv.mp4", muted=True)
+        video_bytes = load_video("static/clean_csv.mp4")
+        if video_bytes:
+            st.video(video_bytes, format="video/mp4", muted=True)
 
     with st.expander("🔍 Анализ CSV данных", expanded=False):
         st.markdown("""
@@ -214,18 +233,20 @@ def show_homepage():
         1. Загрузите CSV-файл
         2. Выберите столбец для классификации
         3. Нажмите "Анализировать данные"
-        4. Ознакомтесь с результатами и скачайте размеченный файл
+        4. Ознакомьтесь с результатами и скачайте размеченный файл
         """)
-        st.video("static/analisys_csv.mp4", muted=True)
+        video_bytes = load_video("static/analisys_csv.mp4")
+        if video_bytes:
+            st.video(video_bytes, format="video/mp4", muted=True)
 
     with st.expander("🤖 Кастомизация модели", expanded=False):
         st.markdown("""
         **Шаги:**
         1. Загрузите CSV-файл
         2. Нажмите "Обучить модель"
-        3. Ознакомтесь с результатами
+        3. Ознакомьтесь с результатами
         """)
-        st.image("static/Training05.png", width = 1000)
+        st.image("static/Training05.png", width=1000)
 
     with st.expander("💬 Анализ чатов", expanded=False):
         st.markdown("""
@@ -233,12 +254,17 @@ def show_homepage():
         1. Экспортируйте нужный вам чат по инструкции ниже
         2. Загрузите HTML-файл чата
         3. Нажмите "Анализировать чат"
-        4. Ознакомтесь с результатами
+        4. Ознакомьтесь с результатами
         """)
-        st.video("static/analisys_chat.mp4", muted=True)
-        st.markdown("Как скачать чат из telegram в формате HTML для анализа активности?")
-        st.video("static/tgHTML.mp4", muted=True)
+        video_bytes = load_video("static/analisys_chat.mp4")
+        if video_bytes:
+            st.video(video_bytes, format="video/mp4", muted=True)
+        st.markdown("Как скачать чат из Telegram в формате HTML для анализа активности?")
+        video_bytes = load_video("static/tgHTML.mp4")
+        if video_bytes:
+            st.video(video_bytes, format="video/mp4", muted=True)
 
 
-
-
+# Для тестирования локально:
+if __name__ == "__main__":
+    show_homepage()
