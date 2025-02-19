@@ -154,91 +154,91 @@ def show_homepage():
 
     st.markdown("\n---")
 
-    st.markdown("""
-    <div style='margin: 40px 0;'>
-        <h2 style='text-align: center; color: white; margin-bottom: 30px;'>🛠️ Как работать с платформой</h2>""",
-                unsafe_allow_html=True)
-
-    custom_expander_style = """
-    <style>
-        .stExpander {
-            border: 2px solid #e0e0e0 !important;
-            border-radius: 15px !important;
-            margin: 15px 0 !important;
-            background: var(--secondary-background-color) !important;
-        }
-        .stExpander summary {
-            padding: 1.2rem !important;
-            font-size: 1.1rem !important;
-            font-weight: 600 !important;
-        }
-        .stExpander summary:hover {
-            background-color: rgba(76,175,80,0.1) !important;
-        }
-        .stExpander summary:after {
-            color: var(--primary-color) !important;
-        }
-    </style>
-    """
-    st.markdown(custom_expander_style, unsafe_allow_html=True)
-
-    st.markdown("""
-    <style>
-        video {
-            max-width: 1000px;
-            border-radius: 10px;
-        }                
-    </style>
-    """, unsafe_allow_html=True)
-
-    with st.expander("📊 Анализ текста", expanded=False):
-        st.markdown("""
-        **Шаги:**
-        1. Введите текст в поле ввода
-        2. Нажмите "Анализировать"
-        3. Ознакомтесь с результатами в правой части экрана
-        """)
-
-        st.video("static/analisys_text.mp4", muted=True)
-
-    with st.expander("🧹 Подготовка данных", expanded=False):
-        st.markdown("""
-        **Шаги:**
-        1. Загрузите CSV-файл
-        2. Выберите столбец с текстовыми данными
-        3. Нажмите "Очистить CSV"
-        4. Ознакомтесь с результатами и скачайте итоговый файл
-        """)
-
-        st.video("static/clean_csv.mp4", muted=True)
-
-    with st.expander("🔍 Анализ CSV данных", expanded=False):
-        st.markdown("""
-        **Шаги:**
-        1. Загрузите CSV-файл
-        2. Выберите столбец для классификации
-        3. Нажмите "Анализировать данные"
-        4. Ознакомтесь с результатами и скачайте размеченный файл
-        """)
-        st.video("static/analisys_csv.mp4", muted=True)
-
-    with st.expander("🤖 Кастомизация модели", expanded=False):
-        st.markdown("""
-        **Шаги:**
-        1. Загрузите CSV-файл
-        2. Нажмите "Обучить модель"
-        3. Ознакомтесь с результатами
-        """)
-        st.image("static/Training05.png", width=1000)
-
-    with st.expander("💬 Анализ чатов", expanded=False):
-        st.markdown("""
-        **Шаги:**
-        1. Экспортируйте нужный вам чат по инструкции ниже
-        2. Загрузите HTML-файл чата
-        3. Нажмите "Анализировать чат"
-        4. Ознакомтесь с результатами
-        """)
-        st.video("static/analisys_chat.mp4", muted=True)
-        st.markdown("Как скачать чат из telegram в формате HTML для анализа активности?")
-        st.video("static/tgHTML.mp4", muted=True)
+    # st.markdown("""
+    # <div style='margin: 40px 0;'>
+    #     <h2 style='text-align: center; color: white; margin-bottom: 30px;'>🛠️ Как работать с платформой</h2>""",
+    #             unsafe_allow_html=True)
+    #
+    # custom_expander_style = """
+    # <style>
+    #     .stExpander {
+    #         border: 2px solid #e0e0e0 !important;
+    #         border-radius: 15px !important;
+    #         margin: 15px 0 !important;
+    #         background: var(--secondary-background-color) !important;
+    #     }
+    #     .stExpander summary {
+    #         padding: 1.2rem !important;
+    #         font-size: 1.1rem !important;
+    #         font-weight: 600 !important;
+    #     }
+    #     .stExpander summary:hover {
+    #         background-color: rgba(76,175,80,0.1) !important;
+    #     }
+    #     .stExpander summary:after {
+    #         color: var(--primary-color) !important;
+    #     }
+    # </style>
+    # """
+    # st.markdown(custom_expander_style, unsafe_allow_html=True)
+    #
+    # st.markdown("""
+    # <style>
+    #     video {
+    #         max-width: 1000px;
+    #         border-radius: 10px;
+    #     }
+    # </style>
+    # """, unsafe_allow_html=True)
+    #
+    # with st.expander("📊 Анализ текста", expanded=False):
+    #     st.markdown("""
+    #     **Шаги:**
+    #     1. Введите текст в поле ввода
+    #     2. Нажмите "Анализировать"
+    #     3. Ознакомтесь с результатами в правой части экрана
+    #     """)
+    #
+    #     st.video("static/analisys_text.mp4", muted=True)
+    #
+    # with st.expander("🧹 Подготовка данных", expanded=False):
+    #     st.markdown("""
+    #     **Шаги:**
+    #     1. Загрузите CSV-файл
+    #     2. Выберите столбец с текстовыми данными
+    #     3. Нажмите "Очистить CSV"
+    #     4. Ознакомтесь с результатами и скачайте итоговый файл
+    #     """)
+    #
+    #     st.video("static/clean_csv.mp4", muted=True)
+    #
+    # with st.expander("🔍 Анализ CSV данных", expanded=False):
+    #     st.markdown("""
+    #     **Шаги:**
+    #     1. Загрузите CSV-файл
+    #     2. Выберите столбец для классификации
+    #     3. Нажмите "Анализировать данные"
+    #     4. Ознакомтесь с результатами и скачайте размеченный файл
+    #     """)
+    #     st.video("static/analisys_csv.mp4", muted=True)
+    #
+    # with st.expander("🤖 Кастомизация модели", expanded=False):
+    #     st.markdown("""
+    #     **Шаги:**
+    #     1. Загрузите CSV-файл
+    #     2. Нажмите "Обучить модель"
+    #     3. Ознакомтесь с результатами
+    #     """)
+    #     st.image("static/Training05.png", width=1000)
+    #
+    # with st.expander("💬 Анализ чатов", expanded=False):
+    #     st.markdown("""
+    #     **Шаги:**
+    #     1. Экспортируйте нужный вам чат по инструкции ниже
+    #     2. Загрузите HTML-файл чата
+    #     3. Нажмите "Анализировать чат"
+    #     4. Ознакомтесь с результатами
+    #     """)
+    #     st.video("static/analisys_chat.mp4", muted=True)
+    #     st.markdown("Как скачать чат из telegram в формате HTML для анализа активности?")
+    #     st.video("static/tgHTML.mp4", muted=True)
